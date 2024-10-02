@@ -4,7 +4,7 @@ description: |
   Bindings for `src/xxhash.h`.
 
   Regenerate bindings with `dart run ffigen --config ffigen.yaml`.
-output: 'lib/xxhash_bindings.g.dart'
+output: 'lib/src/xxhash_bindings.g.dart'
 headers:
   entry-points:
     - 'src/xxhash.h'

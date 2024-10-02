@@ -26,13 +26,25 @@ const String _libName = 'xxhash';
 /// The dynamic library in which the symbols for [XxhashBindings] can be found.
 final DynamicLibrary _dylib = () {
   if (Platform.isMacOS || Platform.isIOS) {
-    return DynamicLibrary.open('$_libName.framework/$_libName');
+    try {
+      return DynamicLibrary.open('$_libName.framework/$_libName');
+    } catch (_) {
+      return DynamicLibrary.open('$_libName.dylib');
+    }
   }
   if (Platform.isAndroid || Platform.isLinux) {
     return DynamicLibrary.open('lib$_libName.so');
   }
   if (Platform.isWindows) {
-    return DynamicLibrary.open('$_libName.dll');
+    try {
+      return DynamicLibrary.open('$_libName.dll');
+    } catch (_) {
+      try {
+        return DynamicLibrary.open('lib${_libName}32.dll');
+      } catch (_) {
+        return DynamicLibrary.open('lib${_libName}64.dll');
+      }
+    }
   }
   throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
 }();

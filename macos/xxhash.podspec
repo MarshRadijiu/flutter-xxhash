@@ -4,14 +4,13 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'xxhash'
-  s.version          = '0.0.1'
-  s.summary          = 'A new Flutter FFI plugin project.'
+  s.version          = '1.0.3'
+  s.summary          = 'A FFI plugin package that implements xxHash, inspired by crypto.'
   s.description      = <<-DESC
-A new Flutter FFI plugin project.
+A FFI plugin package that implements xxHash, inspired by crypto.
                        DESC
-  s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'MarshRadijiu' => 'denardalessandro@gmail.com' }
 
   # This will ensure the source files in Classes/ are included in the native
   # builds of apps using this FFI plugin. Podspec does not support relative
