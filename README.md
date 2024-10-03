@@ -65,25 +65,37 @@ _convert_ package. It is capable of accumulating multiple events, but
 in this usage only a single `Digest` is added to it when the data sink's
 `close` method is invoked.
 
-## For Dart only projects
+## Testing, or Dart only projects
 
-The shared dynamic library is not built when using dart alone without Flutter. For these circumstances, you can download the following pre-compiled dynamic libraries from [Latest Release](https://github.com/MarshRadijiu/flutter-xxhash/releases/latest).
+The shared dynamic library is not available when using dart alone without Flutter or during tests. For these circumstances, you can download the following pre-compiled dynamic libraries from [Latest Release](https://github.com/MarshRadijiu/flutter-xxhash/releases/latest).
 
 ### Linux
 
-Download `libxxhash.so` and add it to `LD_LIBRARY_PATH` environment variable:
+Download `libxxhash.so` and add the folder path where the dynamic library is stored to `LD_LIBRARY_PATH` environment variable:
 
-```
-export LD_LIBRARY_PATH=<path/to/folder/lib>:$LD_LIBRARY_PATH
+```bash
+export LD_LIBRARY_PATH=<path/to/folder>:$LD_LIBRARY_PATH
 ```
 
 This command sets your `LD_LIBRARY_PATH` variable for the current terminal window only. 
-To permanently add `LD_LIBRARY_PATH` to your path think to create an `/etc/environment`.
+
+To permanently add `LD_LIBRARY_PATH` to your path, you can add it to the `/etc/environment`.
 
 ### Windows
 
-Download `libxxhash32.dll`, or `libxxhash64.dll`, based on your windows architecture and add it to the `PATH` environment:
+Download `libxxhash32.dll`, or `libxxhash64.dll`, based on your windows architecture and add the folder path where the dynamic library is stored to the `PATH` environment:
 
+```bash
+setx PATH <path/to/folder>
 ```
-setx PATH <path/to/folder/lib>
+
+
+### If Environment Variable is not available
+
+`xxhash` can link the shared library using `XXHASH.setDynamicLibraryPath`. 
+
+The given folder path can be either absolute or relative to the current working directory.
+
+```dart
+XXHash.setDynamicLibraryPath("<path/to/folder>");
 ```

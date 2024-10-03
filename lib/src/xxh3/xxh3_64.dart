@@ -228,7 +228,6 @@ class _XXH3Bits64SecretAndSeedSink extends _XXH3Bits64SecretSink
   _XXH3Bits64SecretAndSeedSink(
       super.sink, super.secret, int seed, super.digest) {
     this.seed = seed;
-    this.secret = secret;
     pointer = _prepareSecret(secret);
   }
 

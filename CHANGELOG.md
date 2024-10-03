@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Added `XXHash.setDynamicLibraryPath` when global environment is not available.
+
 ## 1.1.0
 
 - Made project dart compatible, not only flutter

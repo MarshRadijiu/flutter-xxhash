@@ -11,6 +11,7 @@ import 'package:xxhash/src/digest/digest.dart';
 import 'package:xxhash/src/hash/hash.sink.dart';
 import 'package:xxhash/src/xxh.exception.dart';
 import 'package:xxhash/src/xxhash_bindings.dart';
+import 'package:path/path.dart' as p;
 
 import 'xxhash_bindings.g.dart';
 
@@ -23,34 +24,56 @@ part 'xxh3/xxh3_128.dart';
 
 const String _libName = 'xxhash';
 
+/// The path to the dynamic library in which the symbols for [XxhashBindings] can be found.
+///
+/// If [_dylibPath] is set, it will be used instead of the global path.
+String? _dylibPath;
+
+/// Open the dynamic library in which the symbols for [XxhashBindings] can be found.
+///
+/// If [_dylibPath] is set, it will be used instead of the global path.
+DynamicLibrary _open(String path) {
+  final dylibPath = _dylibPath;
+  if (dylibPath != null) {
+    path = p.normalize(p.absolute(dylibPath, path));
+  }
+
+  return DynamicLibrary.open(path);
+}
+
 /// The dynamic library in which the symbols for [XxhashBindings] can be found.
 final DynamicLibrary _dylib = () {
   if (Platform.isMacOS || Platform.isIOS) {
     try {
-      return DynamicLibrary.open('$_libName.framework/$_libName');
+      return _open('$_libName.framework/$_libName');
     } catch (_) {
-      return DynamicLibrary.open('$_libName.dylib');
+      return _open('$_libName.dylib');
     }
   }
   if (Platform.isAndroid || Platform.isLinux) {
-    return DynamicLibrary.open('lib$_libName.so');
+    return _open('lib$_libName.so');
   }
   if (Platform.isWindows) {
     try {
-      return DynamicLibrary.open('$_libName.dll');
+      return _open('$_libName.dll');
     } catch (_) {
       try {
-        return DynamicLibrary.open('lib${_libName}32.dll');
+        return _open('lib${_libName}32.dll');
       } catch (_) {
-        return DynamicLibrary.open('lib${_libName}64.dll');
+        return _open('lib${_libName}64.dll');
       }
     }
   }
   throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
 }();
 
+/// The singleton instance of the [XxhashBindings] class.
+XxhashBindingsExtended? _instance;
+
 /// The bindings to the native functions in [_dylib].
-final XxhashBindingsExtended _bindings = XxhashBindingsExtended(_dylib);
+XxhashBindingsExtended get _bindings {
+  return _instance ?? (_instance = XxhashBindingsExtended(_dylib));
+}
 
 /// An implementation of the [XXH32] hash function.
 ///

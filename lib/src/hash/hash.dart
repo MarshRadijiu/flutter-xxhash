@@ -69,4 +69,11 @@ abstract class XXHash<Hash, Canonical extends NativeType>
 
   /// The maximum size of a input to be considered "short".
   static const int maxSeededInputByte = XXH3_MIDSIZE_MAX;
+
+  /// Set the path to the dynamic library in which the symbols for [XxhashBindings] can be found.
+  ///
+  /// [path] can be either absolute or relative to the current working directory.
+  static void setDynamicLibraryPath(String path) {
+    _dylibPath = path;
+  }
 }
