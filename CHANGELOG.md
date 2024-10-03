@@ -1,3 +1,7 @@
+## 1.1.2
+
+- Linked shared library from command line.
+
 ## 1.1.1
 
 - Added `XXHash.setDynamicLibraryPath` when global environment is not available.

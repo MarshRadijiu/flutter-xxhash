@@ -65,30 +65,25 @@ _convert_ package. It is capable of accumulating multiple events, but
 in this usage only a single `Digest` is added to it when the data sink's
 `close` method is invoked.
 
-## Testing, or Dart only projects
-
-The shared dynamic library is not available when using dart alone without Flutter or during tests. For these circumstances, you can download the following pre-compiled dynamic libraries from [Latest Release](https://github.com/MarshRadijiu/flutter-xxhash/releases/latest).
+## Shared Dynamic Library
 
 ### Linux
 
-Download `libxxhash.so` and add the folder path where the dynamic library is stored to `LD_LIBRARY_PATH` environment variable:
+If not already installed, Run the following command to download `libxxhash` on Linux:
 
 ```bash
-export LD_LIBRARY_PATH=<path/to/folder>:$LD_LIBRARY_PATH
+sudo apt install libxxhash
 ```
-
-This command sets your `LD_LIBRARY_PATH` variable for the current terminal window only. 
-
-To permanently add `LD_LIBRARY_PATH` to your path, you can add it to the `/etc/environment`.
 
 ### Windows
 
-Download `libxxhash32.dll`, or `libxxhash64.dll`, based on your windows architecture and add the folder path where the dynamic library is stored to the `PATH` environment:
+Run the following command to download `libxxhash` on Windows using `MSYS`:
 
 ```bash
-setx PATH <path/to/folder>
+pacman -S libxxhash
 ```
 
+Make sure the `MSYS/usr/bin` is available to the system environment.
 
 ### If Environment Variable is not available
 

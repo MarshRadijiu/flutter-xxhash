@@ -51,17 +51,17 @@ final DynamicLibrary _dylib = () {
     }
   }
   if (Platform.isAndroid || Platform.isLinux) {
-    return _open('lib$_libName.so');
+    try {
+      return _open('lib$_libName.so');
+    } catch (_) {
+      return _open('lib$_libName.so.0');
+    }
   }
   if (Platform.isWindows) {
     try {
       return _open('$_libName.dll');
     } catch (_) {
-      try {
-        return _open('lib${_libName}32.dll');
-      } catch (_) {
-        return _open('lib${_libName}64.dll');
-      }
+      return _open('msys-$_libName-0.dll');
     }
   }
   throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
