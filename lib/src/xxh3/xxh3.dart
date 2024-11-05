@@ -39,17 +39,12 @@ abstract class XXH3<Hash, Canonical extends NativeType>
       [int length = XXHash.secretDefaultSize]) {
     assert(length >= XXHash.secretSizeMin);
     final Pointer<Uint8> pointer = calloc<Uint8>(length);
-
-    final Pointer<Uint8> seedPointer = calloc<Uint8>(seed.length);
-
-    for (int i = 0; i < seed.length; i++) {
-      seedPointer[i] = seed[i];
-    }
+    final Pointer<Void> seedPointer = _pointer(seed);
 
     if (_bindings.XXH3_generateSecret(
           pointer.cast(),
           length,
-          seedPointer.cast(),
+          seedPointer,
           seed.length,
         ) ==
         XXH_errorcode.XXH_ERROR) {
@@ -114,16 +109,6 @@ mixin _XXH3Secret<Hash, Canonical extends NativeType> {
   set secret(Uint8List secret) {
     assert(secret.length >= XXHash.secretSizeMin);
     _secret = secret;
-  }
-
-  Pointer<Void> _prepareSecret(List<int> secret) {
-    final Pointer<Uint8> pointer = calloc<Uint8>(secret.length);
-
-    for (int i = 0; i < secret.length; i++) {
-      pointer[i] = secret[i];
-    }
-
-    return pointer.cast();
   }
 }
 

@@ -8,7 +8,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 import 'package:xxhash/src/digest/digest.dart';
-import 'package:xxhash/src/hash/hash.sink.dart';
 import 'package:xxhash/src/xxh.exception.dart';
 import 'package:xxhash/src/xxhash_bindings.dart';
 import 'package:path/path.dart' as p;
@@ -16,11 +15,19 @@ import 'package:path/path.dart' as p;
 import 'xxhash_bindings.g.dart';
 
 part 'hash/hash.dart';
+part 'hash/hash.sink.dart';
 part 'xxh32/xxh32.dart';
 part 'xxh64/xxh64.dart';
 part 'xxh3/xxh3.dart';
 part 'xxh3/xxh3_64.dart';
 part 'xxh3/xxh3_128.dart';
+
+/// Create a [Pointer<Void>] from a [List<int>].
+Pointer<Void> _pointer(List<int> input) {
+  final Pointer<Uint8> pointer = calloc<Uint8>(input.length);
+  pointer.asTypedList(input.length).setAll(0, input);
+  return pointer.cast();
+}
 
 const String _libName = 'xxhash';
 

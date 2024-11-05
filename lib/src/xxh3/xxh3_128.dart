@@ -154,7 +154,7 @@ class _XXH3Bits128Secret extends XXH3Bits128 with _XXH3Secret {
     Pointer<Void> pointer,
     int length,
   ) {
-    final secret = _prepareSecret(this.secret);
+    final secret = _pointer(this.secret);
     final hash = _bindings.XXH3_128bits_withSecret(
       pointer,
       length,
@@ -176,7 +176,7 @@ class _XXH3Bits128SecretSink extends _XXH3Bits128Sink with _XXH3Secret {
 
   _XXH3Bits128SecretSink(super.sink, Uint8List secret, super.digest) {
     this.secret = secret;
-    pointer = _prepareSecret(secret);
+    pointer = _pointer(secret);
   }
 
   @override
@@ -206,7 +206,7 @@ class _XXH3Bits128SecretAndSeed extends XXH3Bits128
     Pointer<Void> pointer,
     int length,
   ) {
-    final secret = _prepareSecret(this.secret);
+    final secret = _pointer(this.secret);
     final hash = _bindings.XXH3_128bits_withSecretandSeed(
       pointer,
       length,

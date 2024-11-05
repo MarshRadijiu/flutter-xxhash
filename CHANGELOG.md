@@ -1,3 +1,7 @@
+## 1.1.3
+
+- Pointer copying optimization, reduced time to parse Uint8List.
+
 ## 1.1.2
 
 - Linked shared library from command line.

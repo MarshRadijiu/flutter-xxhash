@@ -152,7 +152,7 @@ class _XXH3Bits64Secret extends XXH3Bits64 with _XXH3Secret {
     Pointer<Void> pointer,
     int length,
   ) {
-    final secret = _prepareSecret(this.secret);
+    final secret = _pointer(this.secret);
     final hash = _bindings.XXH3_64bits_withSecret(
       pointer,
       length,
@@ -174,7 +174,7 @@ class _XXH3Bits64SecretSink extends _XXH3Bits64Sink with _XXH3Secret {
 
   _XXH3Bits64SecretSink(super.sink, Uint8List secret, super.digest) {
     this.secret = secret;
-    pointer = _prepareSecret(secret);
+    pointer = _pointer(secret);
   }
 
   @override
@@ -204,7 +204,7 @@ class _XXH3Bits64SecretAndSeed extends XXH3Bits64
     Pointer<Void> pointer,
     int length,
   ) {
-    final secret = _prepareSecret(this.secret);
+    final secret = _pointer(this.secret);
     final hash = _bindings.XXH3_64bits_withSecretandSeed(
       pointer,
       length,
@@ -225,10 +225,9 @@ class _XXH3Bits64SecretAndSeed extends XXH3Bits64
 
 class _XXH3Bits64SecretAndSeedSink extends _XXH3Bits64SecretSink
     with _XXH3Seeded {
-  _XXH3Bits64SecretAndSeedSink(
-      super.sink, super.secret, int seed, super.digest) {
+  _XXH3Bits64SecretAndSeedSink(super.sink, super.secret, int seed, super.digest)
+      : super() {
     this.seed = seed;
-    pointer = _prepareSecret(secret);
   }
 
   @override

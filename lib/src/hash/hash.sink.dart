@@ -2,12 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:ffi';
-
-import 'package:ffi/ffi.dart';
-import 'package:xxhash/src/xxhash_bindings.g.dart';
-import 'package:xxhash/src/digest/digest.dart';
-import 'package:xxhash/src/xxh.exception.dart';
+part of '../xxhash.dart';
 
 /// A base class for [Sink] implementations for hash algorithms.
 abstract class XXHSink<State extends Opaque, Hash> implements Sink<List<int>> {
@@ -44,14 +39,9 @@ abstract class XXHSink<State extends Opaque, Hash> implements Sink<List<int>> {
   }
 
   void _updateHash(List<int> chunk) {
-    final Pointer<Uint8> pointer = calloc<Uint8>(chunk.length);
+    final Pointer<Void> pointer = _pointer(chunk);
 
-    for (int i = 0; i < chunk.length; i++) {
-      pointer[i] = chunk[i];
-    }
-
-    if (update(state, pointer.cast(), chunk.length) ==
-        XXH_errorcode.XXH_ERROR) {
+    if (update(state, pointer, chunk.length) == XXH_errorcode.XXH_ERROR) {
       throw XXHException('Failed to update hash state');
     }
 

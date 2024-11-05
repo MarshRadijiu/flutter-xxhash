@@ -22,18 +22,10 @@ abstract class XXHash<Hash, Canonical extends NativeType>
   Digest convert(List<int> input) => _digest(_hash(input));
 
   Hash _hash(List<int> input) {
-    final pointer = _prepare(input);
+    final pointer = _pointer(input);
     final hash = _xxh(pointer, input.length);
     calloc.free(pointer);
     return hash;
-  }
-
-  Pointer<Void> _prepare(List<int> input) {
-    final Pointer<Uint8> pointer = calloc<Uint8>(input.length);
-    for (int i = 0; i < input.length; i++) {
-      pointer[i] = input[i];
-    }
-    return pointer.cast();
   }
 
   Hash _xxh(Pointer<Void> pointer, int length);
