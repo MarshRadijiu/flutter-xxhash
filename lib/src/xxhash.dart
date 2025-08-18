@@ -54,7 +54,7 @@ final DynamicLibrary _dylib = () {
     try {
       return _open('$_libName.framework/$_libName');
     } catch (_) {
-      return _open('$_libName.dylib');
+      return _open('lib$_libName.dylib');
     }
   }
   if (Platform.isAndroid || Platform.isLinux) {

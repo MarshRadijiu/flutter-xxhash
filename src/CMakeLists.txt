@@ -15,3 +15,7 @@ set_target_properties(xxhash PROPERTIES
 )
 
 target_compile_definitions(xxhash PUBLIC DART_SHARED_LIB)
+
+if(ANDROID)
+  target_link_options(xxhash PRIVATE "-Wl,-z,max-page-size=16384")
+endif()
