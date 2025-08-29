@@ -1,3 +1,7 @@
+## 1.1.4
+
+- Added support for 16 KB page sizes for Android builds [Android Developers](https://developer.android.com/guide/practices/page-sizes)
+
 ## 1.1.3
 
 - Pointer copying optimization, reduced time to parse Uint8List.
