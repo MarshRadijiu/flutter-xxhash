@@ -1,0 +1,11 @@
+example/android/** linguist-generated
+example/ios/** linguist-generated
+example/linux/** linguist-generated
+example/macos/** linguist-generated
+example/windows/** linguist-generated
+example/web/** linguist-generated
+
+src/xxhash.c linguist-vendored
+src/xxhash.h linguist-vendored
+
+lib/src/xxhash_bindings.g.dart linguist-generated
